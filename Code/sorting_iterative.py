@@ -10,7 +10,8 @@ def is_sorted(items):
     for num in items:
         if last > num:
             return False
-    return true
+        last = num
+    return True
 
 
 def bubble_sort(items):
@@ -21,16 +22,33 @@ def bubble_sort(items):
     # TODO: Repeat until all items are in sorted order
     while not is_sorted(items):
         # TODO: Swap adjacent items that are out of order
-        for
+        last = items[0]
+        for (i, num) in enumerate(items):
+            if last > num:
+                items[i] = last
+                items[i - 1] = num
+            else:
+                last = num
+
 
 def selection_sort(items):
     """Sort given items by finding minimum item, swapping it with first
     unsorted item, and repeating until all items are in sorted order.
     TODO: Running time: ??? Why and under what conditions?
     TODO: Memory usage: ??? Why and under what conditions?"""
+    unsorted_index = 0
     # TODO: Repeat until all items are in sorted order
-    # TODO: Find minimum item in unsorted items
-    # TODO: Swap it with first unsorted item
+    while not is_sorted(items):
+        # TODO: Find minimum item in unsorted items
+        min_item = (items[unsorted_index], unsorted_index)
+        for (i, item) in enumerate(items[unsorted_index:], unsorted_index):
+            if item < min_item[0]:
+                min_item = (item, i)
+        # TODO: Swap it with first unsorted item
+        items[min_item[1]] = items[unsorted_index]
+        items[unsorted_index] = min_item[0]
+        unsorted_index += 1
+
 
 
 def insertion_sort(items):
@@ -38,6 +56,9 @@ def insertion_sort(items):
     order in front of items, and repeating until all items are in order.
     TODO: Running time: ??? Why and under what conditions?
     TODO: Memory usage: ??? Why and under what conditions?"""
+    unsorted_index = 0
     # TODO: Repeat until all items are in sorted order
+    while not is_sorted(items):
     # TODO: Take first unsorted item
+    
     # TODO: Insert it in sorted order in front of items
