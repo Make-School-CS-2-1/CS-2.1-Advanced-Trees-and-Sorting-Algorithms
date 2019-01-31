@@ -50,15 +50,25 @@ def selection_sort(items):
         unsorted_index += 1
 
 
-
 def insertion_sort(items):
     """Sort given items by taking first unsorted item, inserting it in sorted
     order in front of items, and repeating until all items are in order.
     TODO: Running time: ??? Why and under what conditions?
     TODO: Memory usage: ??? Why and under what conditions?"""
-    unsorted_index = 0
+    unsorted_item = [0, items[0]]
     # TODO: Repeat until all items are in sorted order
     while not is_sorted(items):
-    # TODO: Take first unsorted item
-    
-    # TODO: Insert it in sorted order in front of items
+        # TODO: Take first unsorted item
+        unsorted_item[0] = unsorted_item[0] + 1
+        unsorted_item[1] = items[unsorted_item[0]]
+        print(items, unsorted_item)
+        # TODO: Insert it in sorted order in front of items
+        for (i, item) in enumerate(items[:unsorted_item[0]]):
+            if item > unsorted_item[1]:
+                items.insert(i, unsorted_item[1])
+                del items[unsorted_item[0] + 1]
+                break
+            elif i == unsorted_item[0] - 1:
+                items.insert(unsorted_item[0], unsorted_item[1])
+                del items[unsorted_item[0] + 1]
+
