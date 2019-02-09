@@ -19,7 +19,7 @@ def generate_prefixes(vocabulary):
     return set(word[:len(word)//2] for word in vocabulary)
 
 
-def autocomplete_setup(vocabulary, algorithm='linear_search'):
+def autocomplete_setup(vocabulary, algorithm='my_trie'):
     """Return the main data structure needed to set up autocomplete using the
     given vocabulary and algorithm, specified as linear_search, trie, etc."""
     if algorithm == 'linear_search':
@@ -29,9 +29,13 @@ def autocomplete_setup(vocabulary, algorithm='linear_search'):
         from trie import Trie
         # Create a trie structure with the vocabulary
         return Trie(vocabulary)
+    elif algorithm == 'my_trie':
+        from my_trie import MyTrie
+        # Create my version of a trie with the vocab
+        return MyTrie(vocabulary)
 
 
-def autocomplete(prefix, structure, algorithm='linear_search'):
+def autocomplete(prefix, structure, algorithm='my_trie'):
     """Return all vocabulary entries that start with the given prefix using the
     given structure and algorithm, specified as linear_search, trie, etc."""
     if algorithm == 'linear_search':
@@ -40,6 +44,9 @@ def autocomplete(prefix, structure, algorithm='linear_search'):
     elif algorithm == 'trie':
         # Search the trie structure for the prefix
         return structure.search(prefix)
+    elif algorithm == 'my_trie':
+        # Search my trie structure for the prefix
+        return structure.autocomplete(prefix)
 
 
 def main():
