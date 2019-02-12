@@ -23,15 +23,18 @@ class MyTrie(dict):
     for letter in word:
       found_letter = False
       # Look at all the children of the currrent node
-      for node in self[curr_node]:
+      for i, node in enumerate(self[curr_node]):
         # If the node's letter and the current letter are the same
         if node[0] == letter:
           print('found letter', letter)
           # mark the found node as the current node
-          curr_node = node
-          found_letter = True
           if letter == word[-1]:
-            curr_node[2] = True
+            self[curr_node][i] = (curr_node[0], curr_node[1], True)
+            curr_node = self[curr_node][i]
+            self[curr_node] = self.pop(node)
+          else:
+            curr_node = node
+          found_letter = True
           # Iterate to the next letter
           break;
       if not found_letter:
@@ -62,30 +65,34 @@ class MyTrie(dict):
       words.append(prefix)
 
     for child in self[node]:
-      print('child', child)
       new_prefix = prefix + child[0]
       self.find_words_from_node(words, new_prefix, child)
       
 
   def autocomplete(self, prefix):
+    print('Looking for prefix:', prefix)
     words = []
     curr_node = self.root
     
     # Find the node representing the last letter in prefix
     # Iterate over all letters in prefix
     for letter in prefix:
+      print('looking for letter:', letter)
       found_letter = False
       # Look at all children of current node
       for node in self[curr_node]:
+        print(node)
         # When the letter is found
         if node[0] == letter:
+          print('found letter (', letter, ') in node:', node)
           # Update curr node to current node
           curr_node = node
           found_letter = True
           break;
       # If the prefix isn't in the trie that means there won't be anything to suggest
       if not found_letter:
-        return
+        print('PREFIX NOT IN TRIE')
+        return words
     
     # curr node will be the base for any complete word based on prefix
     base_node = curr_node
@@ -95,8 +102,7 @@ class MyTrie(dict):
 
 if __name__ == "__main__":
   import sys
-  test_words = ['ape', 'apple', 'apricot', 'dog', 'ditch', 'doctor']
+  test_words = ['ape', 'apple', 'apricot', 'dog', 'ditch', 'doctor', 'map', 'mark', 'mat', 'mattress', 'mobile']
   # test_words = ['ape']
   test_trie = MyTrie(test_words)
-  # print(test_trie)
-  print(test_trie.autocomplete('ap'))
+  print(test_trie.autocomplete('m'))
