@@ -19,19 +19,19 @@ class MyTrie(dict):
 # p -> e
 
   def add_word(self, word):
-    print('INSERTING WORD', word)
+    # print('INSERTING WORD', word)
     # Set current node to the root node
     curr_node = self.root
     # Iterate over the letters in the word
-    for j, letter in enumerate(word):
+    for i, letter in enumerate(word):
       found_letter = False
       # Look at all the children of the currrent node
-      for i, node in enumerate(self[curr_node]):
+      for node in self[curr_node]:
         # If the node's letter and the current letter are the same
         if node[0] == letter:
-          print('found letter', letter)
+          # print('found letter', letter)
           # mark the found node as the current node
-          if j == len(word) - 1:
+          if i == len(word) - 1 and not node[2]:
             self[curr_node][i] = (curr_node[0], curr_node[1], True)
             curr_node = self[curr_node][i]
             self[curr_node] = self.pop(node)
@@ -41,10 +41,10 @@ class MyTrie(dict):
           # Iterate to the next letter
           break;
       if not found_letter:
-        print('did not find letter', letter)
+        # print('did not find letter', letter)
         # Create the new node as a child of curr_node
         # if letter == word[-1]:
-        if j == len(word) - 1:
+        if i == len(word) - 1:
           new_node = (letter, self.id, True)
         else:
           new_node = (letter, self.id, False)
@@ -74,22 +74,22 @@ class MyTrie(dict):
       
 
   def autocomplete(self, prefix):
-    print('Looking for prefix:', prefix)
-    print('root', self[self.root])
+    # print('Looking for prefix:', prefix)
+    # print('root', self[self.root])
     words = []
     curr_node = self.root
     
     # Find the node representing the last letter in prefix
     # Iterate over all letters in prefix
     for letter in prefix:
-      print('looking for letter:', letter)
+      # print('looking for letter:', letter)
       found_letter = False
       # Look at all children of current node
       for node in self[curr_node]:
         print(node)
         # When the letter is found
         if node[0] == letter:
-          print('found letter (', letter, ') in node:', node)
+          # print('found letter (', letter, ') in node:', node)
           # Update curr node to current node
           curr_node = node
           found_letter = True
@@ -107,7 +107,7 @@ class MyTrie(dict):
 
 if __name__ == "__main__":
   import sys
-  test_words = ['ape', 'apple', 'apricot', 'dog', 'ditch', 'doctor', 'map', 'mark', 'mat', 'mattress', 'mobile', 'mat','call', 'cat', 'category']
+  test_words = ['ap', 'ape', 'apple', 'apricot', 'ap', 'dog', 'ditch', 'doctor', 'map', 'mark', 'mat', 'mattress', 'matter', 'mobile','call', 'cat', 'category']
   # test_words = ['mat', 'mattress']
   test_trie = MyTrie(test_words)
   print(test_trie)
