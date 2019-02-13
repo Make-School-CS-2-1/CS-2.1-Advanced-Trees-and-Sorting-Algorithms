@@ -6,6 +6,7 @@ class MyTrie(dict):
     super(MyTrie, self).__init__()
 
     self.id = 0
+    # the charcter, a unique id, end charcter in a word
     self.root = ('', self.id, False)
     self[self.root] = []
     self.id += 1
@@ -14,13 +15,15 @@ class MyTrie(dict):
       for word in word_list:
         self.add_word(word)
 
+# a -> p
+# p -> e
 
   def add_word(self, word):
     print('INSERTING WORD', word)
     # Set current node to the root node
     curr_node = self.root
     # Iterate over the letters in the word
-    for letter in word:
+    for j, letter in enumerate(word):
       found_letter = False
       # Look at all the children of the currrent node
       for i, node in enumerate(self[curr_node]):
@@ -28,7 +31,7 @@ class MyTrie(dict):
         if node[0] == letter:
           print('found letter', letter)
           # mark the found node as the current node
-          if letter == word[-1]:
+          if j == len(word) - 1:
             self[curr_node][i] = (curr_node[0], curr_node[1], True)
             curr_node = self[curr_node][i]
             self[curr_node] = self.pop(node)
@@ -40,7 +43,8 @@ class MyTrie(dict):
       if not found_letter:
         print('did not find letter', letter)
         # Create the new node as a child of curr_node
-        if letter == word[-1]:
+        # if letter == word[-1]:
+        if j == len(word) - 1:
           new_node = (letter, self.id, True)
         else:
           new_node = (letter, self.id, False)
@@ -71,6 +75,7 @@ class MyTrie(dict):
 
   def autocomplete(self, prefix):
     print('Looking for prefix:', prefix)
+    print('root', self[self.root])
     words = []
     curr_node = self.root
     
@@ -102,7 +107,8 @@ class MyTrie(dict):
 
 if __name__ == "__main__":
   import sys
-  test_words = ['ape', 'apple', 'apricot', 'dog', 'ditch', 'doctor', 'map', 'mark', 'mat', 'mattress', 'mobile']
-  # test_words = ['ape']
+  test_words = ['ape', 'apple', 'apricot', 'dog', 'ditch', 'doctor', 'map', 'mark', 'mat', 'mattress', 'mobile', 'mat','call', 'cat', 'category']
+  # test_words = ['mat', 'mattress']
   test_trie = MyTrie(test_words)
+  print(test_trie)
   print(test_trie.autocomplete('m'))
