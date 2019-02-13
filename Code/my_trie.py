@@ -86,7 +86,7 @@ class MyTrie(dict):
       found_letter = False
       # Look at all children of current node
       for node in self[curr_node]:
-        print(node)
+        # print(node)
         # When the letter is found
         if node[0] == letter:
           # print('found letter (', letter, ') in node:', node)
