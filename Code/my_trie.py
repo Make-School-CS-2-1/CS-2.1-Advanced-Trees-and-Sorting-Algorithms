@@ -62,15 +62,19 @@ class MyTrie(dict):
         curr_node = new_node
     
   def find_words_from_node(self, words, prefix='', node=None):
-    # If no node is specififed, start from node
+    # If no node is specififed, start from root node
     if not node:
       node = self.root
-
+    # If the third index is true, meaning that this is the last letter in a word
+    #   add this word to the word list
     if node[2]:
       words.append(prefix)
 
+    # Iterate through all the children of the current node
     for child in self[node]:
+      # Append the child's character to the current prefix
       new_prefix = prefix + child[0]
+      # Send the word list, the appended prefix, and the child node recursively
       self.find_words_from_node(words, new_prefix, child)
       
 
