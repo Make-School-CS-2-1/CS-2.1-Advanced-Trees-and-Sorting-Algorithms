@@ -15,9 +15,6 @@ class MyTrie(dict):
       for word in word_list:
         self.add_word(word)
 
-# a -> p
-# p -> e
-
   def add_word(self, word):
     # print('INSERTING WORD', word)
     # Set current node to the root node
@@ -26,27 +23,34 @@ class MyTrie(dict):
     for i, letter in enumerate(word):
       found_letter = False
       # Look at all the children of the currrent node
-      for node in self[curr_node]:
+      for j, node in enumerate(self[curr_node]):
         # If the node's letter and the current letter are the same
         if node[0] == letter:
           # print('found letter', letter)
-          # mark the found node as the current node
+          # If this is the last letter of the word and this word is not already inserted into the Trie
           if i == len(word) - 1 and not node[2]:
-            self[curr_node][i] = (curr_node[0], curr_node[1], True)
-            curr_node = self[curr_node][i]
+            # Edit the current node to represent the end of a word
+            self[curr_node][j] = (curr_node[0], curr_node[1], True)
+            # Set the curr nide to this edited node
+            # Note: we can't set curr_node to node because node is a copy of the node not a reference, so it holds the oriignal data not the edited
+            curr_node = self[curr_node][j]
+            # Create a new key from the edited node and assign it the keys from the old node while simultaneously removing that key
             self[curr_node] = self.pop(node)
+          # If this is not the last letter of the word
           else:
+            # Set the current node to node, walking down the path of the word by one letter
             curr_node = node
           found_letter = True
           # Iterate to the next letter
           break;
       if not found_letter:
         # print('did not find letter', letter)
-        # Create the new node as a child of curr_node
-        # if letter == word[-1]:
+        # If this is the last letter in the word
         if i == len(word) - 1:
+          # Create a new node that marks the end of a word
           new_node = (letter, self.id, True)
         else:
+          # Create a new node
           new_node = (letter, self.id, False)
         # increment id
         self.id += 1
@@ -56,9 +60,6 @@ class MyTrie(dict):
         self[new_node] = []
         # Make the new node the curr node
         curr_node = new_node
-    # After inserting all the letters into the trie,
-    #   mark the last node as the terminal node in a word
-    self[(curr_node[0], curr_node[1], True)] = self.pop(curr_node)
     
   def find_words_from_node(self, words, prefix='', node=None):
     # If no node is specififed, start from node
