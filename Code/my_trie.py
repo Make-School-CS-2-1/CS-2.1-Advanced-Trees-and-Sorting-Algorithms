@@ -111,7 +111,6 @@ class MyTrie(dict):
     
 
 if __name__ == "__main__":
-  import sys
   test_words = ['ap', 'ape', 'apple', 'apricot', 'ap', 'dog', 'ditch', 'doctor', 'map', 'mark', 'mat', 'mattress', 'matter', 'mobile','call', 'cat', 'category']
   # test_words = ['mat', 'mattress']
   test_trie = MyTrie(test_words)
