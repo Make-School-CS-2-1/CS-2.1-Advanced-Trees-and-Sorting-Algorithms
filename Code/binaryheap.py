@@ -117,10 +117,10 @@ class BinaryMinHeap(object):
         item = self.items[index]
         # TODO: Determine which child item to compare this node's item to
         child_index = left_index
-        if (right_index <= last_index and self.items[left_index] > self.items[right_index]):
+        if (right_index <= self._last_index() and self.items[left_index] > self.items[right_index]):
             child_index = right_index
         # TODO: Swap this item with a child item if values are out of order
-        if item < self.items[child_index]:
+        if item > self.items[child_index]:
             self.items[index], self.items[child_index] = self.items[child_index], self.items[index] 
             # TODO: Recursively bubble down again if necessary
             self._bubble_down(child_index)
