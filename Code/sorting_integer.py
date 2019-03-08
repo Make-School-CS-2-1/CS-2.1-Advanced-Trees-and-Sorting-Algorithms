@@ -48,11 +48,12 @@ def bucket_sort(numbers, num_buckets=10):
     for i in range(num_buckets):
       buckets.append([])
     # TODO: Loop over given numbers and place each item in appropriate bucket
-    print(maximum, '-', minimum, '+ 1 = ', maximum-minimum + 1, ' // ', num_buckets, ' = ', (maximum - minimum + 1) // num_buckets)
     for num in numbers:
-      print(num //((maximum - minimum + 1) // num_buckets))
-      buckets[num //((maximum - minimum + 1) // num_buckets) - 1].append(num)
-    print('buckets', buckets)
+      insert_index, remainder = divmod(num, len(numbers) // num_buckets)
+      if remainder > 0:
+        buckets[insert_index].append(num)
+      else:
+        buckets[insert_index - 1].append(num)
     # TODO: Sort each bucket using any sorting algorithm (recursive or another)
     for bucket in buckets:
       if len(bucket):
