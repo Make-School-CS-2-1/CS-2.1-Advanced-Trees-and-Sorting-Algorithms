@@ -116,13 +116,14 @@ class BinaryMinHeap(object):
         # Get the item's value
         item = self.items[index]
         # TODO: Determine which child item to compare this node's item to
-        child_index = 0
-        # ...
+        child_index = left_index
+        if (right_index <= last_index and self.items[left_index] > self.items[right_index]):
+            child_index = right_index
         # TODO: Swap this item with a child item if values are out of order
-        child_item = self.items[child_index]
-        # ...
-        # TODO: Recursively bubble down again if necessary
-        # ...
+        if item < self.items[child_index]:
+            self.items[index], self.items[child_index] = self.items[child_index], self.items[index] 
+            # TODO: Recursively bubble down again if necessary
+            self._bubble_down(child_index)
 
     def _last_index(self):
         """Return the last valid index in the underlying array of items."""

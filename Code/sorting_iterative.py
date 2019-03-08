@@ -61,7 +61,6 @@ def insertion_sort(items):
         # TODO: Take first unsorted item
         unsorted_item[0] = unsorted_item[0] + 1
         unsorted_item[1] = items[unsorted_item[0]]
-        print(items, unsorted_item)
         # TODO: Insert it in sorted order in front of items
         for (i, item) in enumerate(items[:unsorted_item[0]]):
             if item > unsorted_item[1]:
